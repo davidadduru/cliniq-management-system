@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #001f3f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-decoration: none;
+            background-color: #ddd;
+            color: #001f3f;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .back-button:hover {
+            background-color: #bbb;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #001f3f;
+            margin-bottom: 20px;
+        }
+
+        .notification {
+            background-color: #eef4ff;
+            border: 1px solid #cce0ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification p {
+            margin: 0;
+            color: #001f3f;
+        }
+
+        button {
+            background-color: #001f3f;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #004080;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #b0bec5; /* Gray color when disabled */
+            cursor: not-allowed;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+    </style>
+</head>
+<body>
+    <header>Notifications</header>
+    <div class="container">
+        <h2>Your Notifications</h2>
+
+        <!-- Sample notifications -->
+        <div class="notification">
+            <p>Your appointment with Dr. Smith is confirmed for tomorrow.</p>
+            <form action="/notifications/mark-as-read/1" method="POST">
+                <button type="submit" class="mark-read" onclick="markAsRead(this)">Mark as Read</button>
+            </form>
+        </div>
+
+        <div class="notification">
+            <p>New prescription added for your recent checkup.</p>
+            <form action="/notifications/mark-as-read/2" method="POST">
+                <button type="submit" class="mark-read" onclick="markAsRead(this)">Mark as Read</button>
+            </form>
+        </div>
+
+        <div class="notification">
+            <p>Your lab test results are ready for review.</p>
+            <form action="/notifications/mark-as-read/3" method="POST">
+                <button type="submit" class="mark-read" onclick="markAsRead(this)">Mark as Read</button>
+            </form>
+        </div>
+
+        <a href="/dashboard" class="back-button">Back to Dashboard</a>
+    </div>
+
+    <script>
+        function markAsRead(button) {
+            // Disable the button
+            button.disabled = true;
+
+            // Change the button text
+            button.textContent = 'Read';
+
+            // Optionally, change the button color to gray to indicate it's read
+            button.style.backgroundColor = '#b0bec5';
+        }
+    </script>
+</body>
+</html>

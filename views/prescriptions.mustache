@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescriptions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #001f3f;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            text-decoration: none;
+            background-color: #ddd;
+            color: #001f3f;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #bbb;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #001f3f;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #001f3f;
+            color: white;
+            font-size: 16px;
+        }
+
+        td {
+            color: #333;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            align-items: center;
+        }
+
+        .form-container div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        textarea, input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 60px;
+            resize: none;
+        }
+
+        .button-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #001f3f;
+            color: white;
+            padding: 7px 20px; /* Fixed padding to be uniform */
+            border: none;
+            border-radius: 5px;
+            font-size: 14px; /* Consistent font size */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #004080;
+            transform: translateY(-2px); /* Moves the button up */
+        }
+
+        .remove-button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 20px; /* Adjusted to match */
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .remove-button:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .add-btn-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .add-btn-container button {
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Prescriptions
+        <a href="/dashboard" class="back-button">Back to Dashboard</a>
+    </header>
+    <div class="container">
+        <h2>Your Prescriptions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Prescription Details</th>
+                    <th>Doctor Name</th>
+                    <th>Issued Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#prescriptions}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{prescription_details}}</td>
+                    <td>{{doctor_name}}</td>
+                    <td>{{issued_date}}</td>
+                    <td>
+                        <form action="/prescriptions/remove" method="POST">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button type="submit" class="remove-button">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/prescriptions}}
+                {{^prescriptions}}
+                <tr>
+                    <td colspan="5">No prescriptions found.</td>
+                </tr>
+                {{/prescriptions}}
+            </tbody>
+        </table>
+
+        <h2>Request a New Prescription</h2>
+        <form action="/prescriptions/create" method="POST" class="form-container">
+            <div>
+                <label for="prescription_details">Prescription Details</label>
+                <textarea id="prescription_details" name="prescription_details" placeholder="Enter Prescription Details" required></textarea>
+            </div>
+            <div>
+                <label for="doctor_name">Doctor Name</label>
+                <input type="text" id="doctor_name" name="doctor_name" placeholder="Enter Doctor's Name" required>
+            </div>
+            <div>
+                <label for="issued_date">Issued Date</label>
+                <input type="date" id="issued_date" name="issued_date" required>
+            </div>
+            <div class="add-btn-container">
+                <button type="submit">Add Prescription</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

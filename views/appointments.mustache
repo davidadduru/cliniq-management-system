@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #001f3f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            text-decoration: none;
+            background-color: #ddd;
+            color: #001f3f;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #bbb;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #001f3f;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        th {
+            background-color: #001f3f;
+            color: white;
+            font-size: 16px;
+        }
+
+        td {
+            color: #333;
+        }
+
+        /* Table row hover effect */
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .form-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #001f3f;
+            outline: none;
+        }
+
+        button {
+            background-color: #001f3f;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .remove-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 18px;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .remove-button:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .add-btn-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .add-btn-container button {
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Appointments
+        <a href="/dashboard" class="back-button">Back to Dashboard</a>
+    </header>
+    <div class="container">
+        <h2>Your Appointments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ID Number</th>
+                    <th>Appointment Date</th>
+                    <th>Type of Checkup</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#appointments}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{student_id}}</td>
+                    <td>{{appointment_date}}</td>
+                    <td>{{type_of_checkup}}</td>
+                    <td>
+                        <form action="/appointments/remove" method="POST">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button type="submit" class="remove-button">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/appointments}}
+                {{^appointments}}
+                <tr>
+                    <td colspan="5">No appointments found.</td>
+                </tr>
+                {{/appointments}}
+            </tbody>
+        </table>
+
+        <h2>Create a New Appointment</h2>
+        <form action="/appointments/create" method="POST" class="form-container">
+            <div class="form-group">
+                <label for="id_number">ID Number</label>
+                <input type="text" id="id_number" name="student_id" placeholder="Enter your ID number" required>
+            </div>
+            <div class="form-group">
+                <label for="appointment_date">Appointment Date</label>
+                <input type="date" id="appointment_date" name="appointment_date" required>
+            </div>
+            <div class="form-group">
+                <label for="type_of_checkup">Type of Checkup</label>
+                <select id="type_of_checkup" name="type_of_checkup" required>
+                    <option value="" disabled selected>Select Type of Checkup</option>
+                    <option value="General Checkup">General Checkup</option>
+                    <option value="Dental Checkup">Dental Checkup</option>
+                    <option value="Eye Checkup">Eye Checkup</option>
+                </select>
+            </div>
+            <div class="add-btn-container">
+                <button type="submit">Add Appointment</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

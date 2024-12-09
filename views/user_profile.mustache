@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f8;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #001f3f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Back Button */
+        .back-button {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            text-decoration: none;
+            background-color: #ddd;
+            color: #001f3f;
+            padding: 10px 18px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s ease; /* Removed transform and scale effects */
+        }
+
+        .back-button:hover {
+            background-color: #bbb; /* Simple hover effect */
+        }
+
+        /* Container */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #001f3f;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Input Fields */
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border 0.3s ease;
+        }
+
+        /* Focus Effect for Input Fields */
+        input:focus {
+            border-color: #004080;
+            outline: none;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #001f3f;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #004080;
+            transform: translateY(-3px); /* Button moves up slightly on hover */
+        }
+
+        /* Button Container */
+        .button-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        User Profile
+        <a href="/dashboard" class="back-button">Back to Dashboard</a>
+    </header>
+
+    <div class="container">
+        <h2>Edit Your Profile</h2>
+        <form action="/profile/update" method="POST">
+            <label for="id_number">ID Number:</label>
+            <input type="text" id="id_number" name="id_number" value="{{user.id_number}}" required>
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" value="{{user.last_name}}" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{user.email}}" required>
+
+            <div class="button-container">
+                <button type="submit">Update Profile</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
